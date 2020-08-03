@@ -14,7 +14,7 @@ For the purpose of this project, we use the following primitive types: INT, LONG
  
 This repository contains the following tests:
 
-⋅⋅* `arrays.java`: Arrays may vary in item types and length of the array. Two versions of the schema per test.
+⋅⋅* `arrays.java`: Arrays may vary in item types. These different types may or may not have share rules of promotion. Two versions of the schema per test.
 
 ⋅⋅* `maps.java`: Maps may vary in item values. Two versions of the schema per test. 
 
