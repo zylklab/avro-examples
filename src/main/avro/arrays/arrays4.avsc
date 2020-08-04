@@ -1,8 +1,0 @@
-{
-    "type": "record",
-    "namespace": "net.zylklab.avroExamples",
-    "name": "array_v4",
-    "fields": [
-        {"name": "myArray", "type": {"type": "array", "items": "int"}}
-     ]
-}

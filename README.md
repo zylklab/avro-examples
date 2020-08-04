@@ -8,7 +8,7 @@ We would like to test how these rules apply to different schemas.
 ## Tests
 
 
-We check for full compatibility on the following Avro schema types: primitive types, unions, arrays, maps, enums, records and fixed. This means that each schema should, at least, provide backward and forward compatibility with the immediate previous or next version. As such, each test contains at least two versions of an schema. We use three versions when dealing with the primitive type INT, as they can be promoted to many other types.
+We check for compatibility on the following Avro schema types: primitive types, unions, arrays, maps, enums, records and fixed. This means that each schema should, at least, provide backward and forward compatibility with the immediate previous or next version. As such, each test contains at least two versions of an schema. We use three versions when dealing with the primitive type INT, as they can be promoted to many other types.
 
 For the purpose of this project, we use the following primitive types: INT, LONG, FLOAT, STRING, BYTES and NULL. 
  
@@ -18,7 +18,7 @@ This repository contains the following tests:
 
 ⋅⋅* `maps.java`: Maps may vary in item values. Two versions of the schema per test. 
 
-⋅⋅* `enums.java`: Enumerations may have different legnth or item names. Two versions of the schema per test. 
+⋅⋅* `enums.java`: Enumerations may have different length or item names. Two versions of the schema per test. 
 
 ⋅⋅* `fixed.java`: Fixed schemas may have different sizes or names. Two versions of the schema per test. 
 

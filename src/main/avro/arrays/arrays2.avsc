@@ -3,6 +3,6 @@
     "namespace": "net.zylklab.avroExamples",
     "name": "array_v2",
     "fields": [
-        {"name": "myArray", "type": {"type": "array", "items": "bytes"}}
+        {"name": "myData", "type": {"type": "array", "items": "bytes"}}
      ]
 }
