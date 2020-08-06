@@ -51,7 +51,7 @@ public class TestCompatibility {
 		File file = new File(tmpPath);
 
 		
-		// Serialize
+		// 1. Serialize
 		try {
 			serializeToFile(avroRecord, schema1, file);
 		} catch (IOException ex) {
@@ -63,7 +63,7 @@ public class TestCompatibility {
 		}
 		
 		
-		// Deserialize
+		// 2. Deserialize
 		GenericRecord newAvroRecord;
 		try {
 			newAvroRecord = deserializeFromFile(schema2, file);
@@ -81,7 +81,7 @@ public class TestCompatibility {
 			return -1;		
 		}
 		
-		// Check that the deserialized Avro record has the exepcted values
+		// 3. Check that the deserialized Avro record has the exepcted values
 		try {
 			checkRecordData(newAvroRecord, expAvroRecord);
 		} catch (RuntimeException ex) {
@@ -158,13 +158,22 @@ public class TestCompatibility {
 	}
 	
 	
-	private int checkRecordData(GenericRecord AvroRecord, GenericRecord expectedAvroRecord) throws RuntimeException {
-
-		for (Schema.Field f : AvroRecord.getSchema().getFields()) {
+	/**
+	 * Checks, field by field, if two given Avro records are the same. 
+	 * 
+	 * @param avroRecord First record
+	 * @param expectedAvroRecord Second record, to use as the ground truth.
+	 * @return 1 if both records match.
+	 * @throws RuntimeException If two fields of the record are not the same.
+	 */
+ 	private int checkRecordData(GenericRecord avroRecord, GenericRecord expectedAvroRecord) throws RuntimeException {
+ 		
+ 		// For each element of the Avro record
+		for (Schema.Field f : expectedAvroRecord.getSchema().getFields()) {
 			
 			String name = f.name();
 
-			if (equalsWithNulls(AvroRecord.get(name), expectedAvroRecord.get(name))) {
+			if (equalsWithNulls(avroRecord.get(name), expectedAvroRecord.get(name))) {
 				continue;
 			} else {
 				throw new RuntimeException("Deserialized values for field " + name + " did not match the expected values." );
@@ -176,6 +185,13 @@ public class TestCompatibility {
 		
 	}
 	
+ 	/**
+	 * Safe comparison between objects.
+	 * 
+	 * @param a
+	 * @param b
+	 * @return Boolean value depending on the output.
+	 */
 	private boolean equalsWithNulls(Object a, Object b) {
 	    if (a==b) return true;
 	    if ((a==null)||(b==null)) return false;

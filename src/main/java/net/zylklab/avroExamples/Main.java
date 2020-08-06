@@ -3,7 +3,6 @@ package main.java.net.zylklab.avroExamples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.net.zylklab.avroExamples.tests.MyTests;
 import main.java.net.zylklab.avroExamples.tests.TestArrays;
 import main.java.net.zylklab.avroExamples.tests.TestEnums;
 import main.java.net.zylklab.avroExamples.tests.TestFixed;
@@ -16,10 +15,21 @@ public class Main {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 	
+	/**
+	 * Default string used during testing.
+	 */
 	public static final String DEFAULT_STRING = "Hello";
+	/**
+	 * Default integer used during testing.
+	 */
 	public static final int DEFAULT_INT = 1;
 	
 	
+	/**
+	 * Runs all the tests on Avro schemas.
+	 * 
+	 * @param args
+	 */
     public static void main(String[] args) {
 
     	   	
