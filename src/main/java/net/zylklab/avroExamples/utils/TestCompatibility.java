@@ -15,9 +15,6 @@ import org.apache.avro.io.DatumWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.net.zylklab.avroExamples.tests.TestArrays;
-
-
 public class TestCompatibility {
 	/**
 	 * Tests whether two versions of an Avro schema are compatible.

@@ -51,9 +51,6 @@ public class Main {
         TestUnions testUnions = new TestUnions();
         testUnions.testCompatibility();
 	
-    	LOGGER.info("My tests...");
-        MyTests myTests = new MyTests();
-        myTests.testCompatibility();
     	
         LOGGER.info("Done");
         
