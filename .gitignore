@@ -45,4 +45,5 @@ local.properties
 ##############################
 ## OTHER
 ##############################
-
+src/main/avro/myTests/*
+src/main/java/net/zylklab/avroExamples/tests/MyTests.java

@@ -1,0 +1,8 @@
+{
+    "type": "record",
+    "namespace": "net.zylklab.avroExamples",
+    "name": "primitives_v2",
+    "fields": [
+        {"name": "myData", "type": "string"}
+     ]
+}

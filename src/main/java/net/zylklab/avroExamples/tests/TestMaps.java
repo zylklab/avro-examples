@@ -3,7 +3,9 @@ package main.java.net.zylklab.avroExamples.tests;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -13,19 +15,17 @@ import org.slf4j.LoggerFactory;
 
 import main.java.net.zylklab.avroExamples.utils.TestCompatibility;
 
-
-public class TestArrays {
+public class TestMaps {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestArrays.class);
-	
+
 	public void testArrayCompatibility(){
-				
+		
 		// Read all schemas
-		Schema schema1, schema2, schema3;
+		Schema schema1, schema2;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/arrays/arrays1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/arrays/arrays2.avsc"));
-			schema3 = new Schema.Parser().parse(new File("src/main/avro/arrays/arrays3.avsc"));
+			schema1 = new Schema.Parser().parse(new File("src/main/avro/maps/maps1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("src/main/avro/maps/maps2.avsc"));
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
 			LOGGER.error(ex.toString());
@@ -39,33 +39,32 @@ public class TestArrays {
 		// Keep results stored somewhere
 		List<Integer> results = new ArrayList<Integer>();
 		
-		LOGGER.info("Test 1: Arrays have the same item type");
+		LOGGER.info("Test 1: Maps have the same item type");
 		// Schema 1
-		List<String> testArray1 = new ArrayList<String>();
-		testArray1.add("Hello");
+		Map<String, Integer> myMap1 = new HashMap<String, Integer>();
+		myMap1.put("key_1", 1);
 		GenericRecord avroData1 = new GenericData.Record(schema1);
-		avroData1.put("myData", testArray1);
+		avroData1.put("myData", myMap1);
 		results.add(myTester.testCompatibility(avroData1, schema1, schema1)); // Pass
-		
-		LOGGER.info("Test 2: Arrays have different item types, but you can promote from one to the other");
+
+
+		LOGGER.info("Test 2: Maps have different item types, but you can promote from one to the other");
 		// Schema 1 and 2
-		List<String> testArray2 = new ArrayList<String>();
-		testArray2.add("Hello");
+		Map<String, Integer> myMap2 = new HashMap<String, Integer>();
+		myMap2.put("key_1", 1);
 		GenericRecord avroData2 = new GenericData.Record(schema1);
-		avroData2.put("myData", testArray2);
+		avroData2.put("myData", myMap2);
 		results.add(myTester.testCompatibility(avroData2, schema1, schema2)); // Pass
 
 		
-		LOGGER.info("Test 3: Arrays have different item types, and you cannot promote from one to the other");
-		// Schema 1 and 3
-		List<String> testArray3 = new ArrayList<String>();
-		testArray3.add("Hello");
-		GenericRecord avroData3 = new GenericData.Record(schema1);
-		avroData3.put("myData", testArray3);
-		results.add(myTester.testCompatibility(avroData3, schema1, schema3)); // Fail
-
-		
-		
+		LOGGER.info("Test 3: Maps have different item types, and you cannot promote from one to the other");
+		// Schema 1 and 2
+		Map<String, Long> myMap3 = new HashMap<String, Long>();
+		myMap3.put("key_1", (long) 1);
+		GenericRecord avroData3 = new GenericData.Record(schema2);
+		avroData3.put("myData", myMap3);
+		results.add(myTester.testCompatibility(avroData3, schema2, schema1)); // Fail
+				
 		// Return info
 		// // Count number of successes
 		int count=0;
@@ -76,6 +75,8 @@ public class TestArrays {
 		}
 		LOGGER.info("Expected " + 2 + " tests to run successfully. Got " + count);		// TODO Hardcoded number here
 		
+		
 	}
+
 	
 }

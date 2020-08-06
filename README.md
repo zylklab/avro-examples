@@ -16,17 +16,17 @@ This repository contains the following tests:
 
 ⋅⋅* `arrays.java`: Arrays may vary in item types. These different types may or may not have share rules of promotion. Two versions of the schema per test.
 
-⋅⋅* `maps.java`: Maps may vary in item values. Two versions of the schema per test. 
+⋅⋅* `maps.java`: Maps may vary in item values. 
 
-⋅⋅* `enums.java`: Enumerations may have different length or item names. Two versions of the schema per test. 
+⋅⋅* `enums.java`: Enumerations may have different length or item names.
 
-⋅⋅* `fixed.java`: Fixed schemas may have different sizes or names. Two versions of the schema per test. 
+⋅⋅* `fixed.java`: Fixed schemas may have different sizes or names.
 
-⋅⋅* `records.java`: Records may have different number of fields (with default values and without them), and fields with different names or different order. Two versions of the schema per test. 
+⋅⋅* `records.java`: Records may have different number of fields (with default values and without them), and fields with different names or different order.
 
-⋅⋅* `union.java`: Elements in the unions may or may not intersect. We pay special attention to the type NULL, as it can only be used inside unions. Two versions of the schema per test. 
+⋅⋅* `union.java`: Elements in the unions may or may not intersect. We pay special attention to the type NULL, as it only makes sense to use it inside unions.
 
-⋅⋅* `primitive.java`: We check for the promotion rules to apply when using primitive types alone or when these types are inside a more complex schema (union, array, etc). Two or three versions of the schema per test, depending on the primitive type.
+⋅⋅* `primitive.java`: We check for the promotion rules to apply when using primitive types alone. All the other test scripts include instances when these types are inside a more complex schema (union, array, etc) and need to be promoted.
  
 
 

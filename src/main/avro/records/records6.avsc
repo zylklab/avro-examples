@@ -1,0 +1,10 @@
+{
+    "type": "record",
+    "namespace": "net.zylklab.avroExamples",
+    "name": "records_v6",
+    "fields": [
+	      {"name": "data_1", "type": "int"},
+	      {"name": "data_2", "type": ["null", "string"]},
+	      {"name": "data_3", "type": "string"}
+     ]
+}
