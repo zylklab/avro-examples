@@ -40,23 +40,30 @@ public class MyTests extends Tests{
 		ReportIO reporter = new ReportIO();
 		
 		LOGGER.info("Test 1: Arrays as posted in Slack");
-		// Schema 1
+		// Schema 1 and 2
+		results.add(test1(schema1, schema2)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		// Create object
-		GenericRecord avroData = new GenericData.Record(schema1);
+		
+		// Return info
+		reportSuccesses(results, 1);
+		
+	}
+	
+	private int test1(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericRecord avroData = new GenericData.Record(WriterSchema);
 		avroData.put("myData", null);
 		avroData.put("myData_1", null);
 		avroData.put("myData_2", null);
-		// Create expected object
-		GenericRecord expAvroData = new GenericData.Record(schema2);
+		// Expected object
+		GenericRecord expAvroData = new GenericData.Record(ReaderSchema);
 		expAvroData.put("myData", null);
 		expAvroData.put("myData_1", null);
 		expAvroData.put("myData_2", null);
 		expAvroData.put("extraData", null);
 		
-		results.add(myTester.testCompatibility(avroData, schema1, schema2, expAvroData)); // Pass
-		reporter.reportResults(results.get(results.size() - 1 ));
-		
+		return myTester.testCompatibility(avroData, WriterSchema, ReaderSchema, expAvroData);
 	}
 	
 }

@@ -13,10 +13,22 @@ public abstract class Tests {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MyTests.class);
 	
+	/**
+	 * Object that runs the tests.
+	 */
 	protected TestCompatibility myTester = new TestCompatibility();
 	
+	/**
+	 * Runs all tests.
+	 */
 	public abstract void testCompatibility();		
 		
+	/**
+	 * Report the number of successes. 
+	 * 
+	 * @param results List with the results of all tests.
+	 * @param expectedHits	Expected number of tests with a positive output
+	 */
 	protected void reportSuccesses(List<Integer> results, int expectedHits) {
 		// Count number of successes
 		int count=0;

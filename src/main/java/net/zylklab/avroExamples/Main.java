@@ -16,12 +16,21 @@ public class Main {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 	
+	/**
+	 * Default string used during testing.
+	 */
 	public static final String DEFAULT_STRING = "Hello";
+	/**
+	 * Default integer used during testing.
+	 */
 	public static final int DEFAULT_INT = 1;
 	
-	
+	/**
+	 * Runs all the tests on Avro schemas.
+	 * 
+	 * @param args
+	 */
     public static void main(String[] args) {
-
     	   	
         LOGGER.info("Testing arrays...");
         TestArrays testArrays = new TestArrays();
