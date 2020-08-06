@@ -4,12 +4,14 @@
      <groupId>net.zylklab.avroExamples</groupId>
      <artifactId>avro-examples</artifactId>
      <version>0.1</version>
+     <packaging>jar</packaging>
      <description>Test how Avro schema evolution rules apply.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<avro.version>1.10.0</avro.version>
 		<maven.compiler.version>3.8.1</maven.compiler.version>
+		<maven.assembly.version>3.3.0</maven.assembly.version>
 		<source.version>1.8</source.version>
 		<target.version>1.8</target.version>
 	</properties>
@@ -41,6 +43,34 @@
 					<target>${target.version}</target>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven.assembly.version}</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+	                <archive>
+	                        <manifest>
+	                            <mainClass>main.java.net.zylklab.avroExamples.Main</mainClass>
+	                        </manifest>
+	                    </archive>
+	                </configuration>
+	                <executions>
+	                    <execution>
+	                        <!-- this is used for inheritance merges -->
+	                        <id>make-assembly</id>
+	                        <!-- bind to the packaging phase -->
+	                        <phase>package</phase>
+	                        <goals>
+	                            <goal>single</goal>
+	                        </goals>
+	                    </execution>
+	                </executions>
+            </plugin>
+			
 			<!-- For performing code generation when creating classes defined by Avro 
 			
 			<plugin>

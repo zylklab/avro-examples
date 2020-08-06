@@ -13,14 +13,14 @@ import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.net.zylklab.avroExamples.utils.TestCompatibility;
+import main.java.net.zylklab.avroExamples.utils.ReportIO;
 
-public class TestEnums {
+public class TestEnums extends Tests{
 
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(TestArrays.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestEnums.class);
 
-	public void testArrayCompatibility(){
+	public void testCompatibility(){
 		
 		// Read all schemas
 		Schema schema1, schema2, schema3, schema4, schema5, schema6, schema7, schema8, schema9;
@@ -42,105 +42,199 @@ public class TestEnums {
 			return;			
 		}
 		
-		
-		// Instantiate the class that checks for compatibility
-		TestCompatibility myTester = new TestCompatibility();
-		
 		// Keep results stored somewhere
 		List<Integer> results = new ArrayList<Integer>();
 		
+		// Start results reporter
+		ReportIO reporter = new ReportIO();
+		
 		LOGGER.info("Test 1: Enumerations have same size and unqualified names in the same order");
 		// Schema 1
-		GenericEnumSymbol<EnumSymbol> testValue1 = new EnumSymbol(schema1, "OPTION_1");
-		GenericRecord avroData1 = new GenericData.Record(schema1);
-		avroData1.put("myData", testValue1);
-		results.add(myTester.testCompatibility(avroData1, schema1, schema1));	// Pass
-		
+		results.add(test1(schema1, schema1));	// Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		LOGGER.info("Test 2: Enumerations have same size and unqualified names in different order");
 		// Schema 1 and 2
-		GenericEnumSymbol<EnumSymbol> testValue2 = new EnumSymbol(schema1, "OPTION_2");
-		GenericRecord avroData2 = new GenericData.Record(schema1);
-		avroData2.put("myData", testValue2);
-		results.add(myTester.testCompatibility(avroData2, schema1, schema2)); // Pass
-		
+		results.add(test2(schema1, schema2)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		LOGGER.info("Test 3: Enumerations have same size, different unqualified names (name sets intersect) but no default values. Object value is present in both name sets");
 		// Schema 1 and 3
-		GenericEnumSymbol<EnumSymbol> testValue3 = new EnumSymbol(schema1, "OPTION_1");
-		GenericRecord avroData3 = new GenericData.Record(schema1);
-		avroData3.put("myData", testValue3);
-		results.add(myTester.testCompatibility(avroData3, schema1, schema3)); // Pass
-
+		results.add(test3(schema1, schema3)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		LOGGER.info("Test 4: Enumerations have same size, different unqualified names (name sets intersect) but no default values. Object value is only present in one name set");
 		// Schema 1 and 3
-		GenericEnumSymbol<EnumSymbol> testValue4 = new EnumSymbol(schema1, "OPTION_3");
-		GenericRecord avroData4 = new GenericData.Record(schema1);
-		avroData4.put("myData", testValue4);
-		results.add(myTester.testCompatibility(avroData4, schema1, schema3)); // Fail
-
+		results.add(test4(schema1, schema3)); // Fail
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		LOGGER.info("Test 5: Enumerations have same size, different unqualified names (name sets intersect) and default values. Object value is only present in one name set and default value is present in both name sets");
+		LOGGER.info("Test 5: Enumerations have same size, different unqualified names (name sets intersect) and default values. Object value is only present in the reader's name set and the default value is present in both name sets");
 		// schema 4 and schema 5
-		GenericEnumSymbol<EnumSymbol> testValue5 = new EnumSymbol(schema4, "OPTION_3");
-		GenericRecord avroData5 = new GenericData.Record(schema4);
-		avroData5.put("myData", testValue5);
-		results.add(myTester.testCompatibility(avroData5, schema4, schema5)); // Pass
+		results.add(test5(schema4, schema5)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		LOGGER.info("Test 6: Enumerations have same size, different unqualified names (name sets intersect) and default values. Object value is only present in one name set and default value is only present in one name set");
+		LOGGER.info("Test 6: Enumerations have same size, different unqualified names (name sets intersect) and default values. Object value is only present in the reader's name set and default value is only present in the writer's name set");
 		// schema 6 and schema 7
-		GenericEnumSymbol<EnumSymbol> testValue6 = new EnumSymbol(schema6, "OPTION_3");
-		GenericRecord avroData6 = new GenericData.Record(schema6);
-		avroData6.put("myData", testValue6);
-		results.add(myTester.testCompatibility(avroData6, schema6, schema7)); // Pass	
+		results.add(test6(schema6, schema7)); // Pass	
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		
-		LOGGER.info("Test 7: Enumerations have different sizes, one name set is a subset of the other and there are default values. Object value is only present in one name set");
+		LOGGER.info("Test 7: Enumerations have different sizes, one name set is a subset of the other and there are default values. Object value is present in both name sets.");
 		// schema 6 and schema 8
-		GenericEnumSymbol<EnumSymbol> testValue71 = new EnumSymbol(schema6, "OPTION_3");
-		GenericRecord avroData71 = new GenericData.Record(schema6);
-		avroData71.put("myData", testValue71);
-		results.add(myTester.testCompatibility(avroData71, schema6, schema8)); // Pass
+		results.add(test7(schema6, schema8)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		GenericEnumSymbol<EnumSymbol> testValue72 = new EnumSymbol(schema8, "OPTION_4");
-		GenericRecord avroData72 = new GenericData.Record(schema8);
-		avroData72.put("myData", testValue72);
-		results.add(myTester.testCompatibility(avroData72, schema8, schema6)); // Pass		
+		LOGGER.info("Test 8: Enumerations have different sizes, one name set is a subset of the other and there are default values. Object value is only present in the writer's name set.");
+		// schema 6 and schema 8
+		results.add(test8(schema8, schema6)); // Pass		
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		
-		LOGGER.info("Test 8: Enumerations have different sizes, one name set is a subset of the other but there are no default values. Object value is present in both name sets");
+		LOGGER.info("Test 9: Enumerations have different sizes, one name set is a subset of the other but there are no default values. Object value is only present in the writer's name set");
 		// schema 1 and schema 9
-		GenericEnumSymbol<EnumSymbol> testValue81 = new EnumSymbol(schema1, "OPTION_1");
-		GenericRecord avroData81 = new GenericData.Record(schema1);
-		avroData81.put("myData", testValue81);
-		results.add(myTester.testCompatibility(avroData81, schema1, schema9));	// Pass
-		
-		GenericEnumSymbol<EnumSymbol> testValue82 = new EnumSymbol(schema9, "OPTION_1");
-		GenericRecord avroData82 = new GenericData.Record(schema9);
-		avroData82.put("myData", testValue82);
-		results.add(myTester.testCompatibility(avroData82, schema9, schema1));	// Pass
-		
-		LOGGER.info("Test 9: Enumerations have different sizes, one name set is a subset of the other but there are no default values. Object value is only present in one name set");
-		// schema 1 and schema 9
-		GenericEnumSymbol<EnumSymbol> testValue9 = new EnumSymbol(schema9, "OPTION_4");
-		GenericRecord avroData9 = new GenericData.Record(schema9);
-		avroData9.put("myData", testValue9);
-		results.add(myTester.testCompatibility(avroData9, schema9, schema1));	// Fail
-		
+		results.add(test9(schema9, schema1));	// Fail
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		// Return info
-		// // Count number of successes
-		int count=0;
-		for (Integer i : results) {
-			if (i>0) {
-				count += 1;
-			}
-		}
-		LOGGER.info("Expected " + 9 + " tests to run successfully. Got " + count);		// TODO Hardcoded number here
+		reportSuccesses(results, 7);
+
 		
 	}
 	
+	private int test1(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue1 = new EnumSymbol(WriterSchema, "OPTION_1");
+		GenericRecord avroData1 = new GenericData.Record(WriterSchema);
+		avroData1.put("myData", testValue1);
+		
+		// Expected object
+		GenericEnumSymbol<EnumSymbol> expTestValue1 = new EnumSymbol(ReaderSchema, "OPTION_1");
+		GenericRecord expAvroData1 = new GenericData.Record(ReaderSchema);
+		expAvroData1.put("myData", expTestValue1);
+		
+		return myTester.testCompatibility(avroData1, WriterSchema, ReaderSchema, expAvroData1);
+	}
+	
+	
+	private int test2(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue2 = new EnumSymbol(WriterSchema, "OPTION_2");
+		GenericRecord avroData2 = new GenericData.Record(WriterSchema);
+		avroData2.put("myData", testValue2);
+		
+		// Expected object
+		GenericEnumSymbol<EnumSymbol> expTestValue2 = new EnumSymbol(ReaderSchema, "OPTION_2");
+		GenericRecord expAvroData2 = new GenericData.Record(ReaderSchema);
+		expAvroData2.put("myData", expTestValue2);
+		
+		return myTester.testCompatibility(avroData2, WriterSchema, ReaderSchema, expAvroData2); 
+	}
+	
+	
+	private int test3(Schema WriterSchema, Schema ReaderSchema){
+		//Input objects
+		GenericEnumSymbol<EnumSymbol> testValue3 = new EnumSymbol(WriterSchema, "OPTION_1");
+		GenericRecord avroData3 = new GenericData.Record(WriterSchema);
+		avroData3.put("myData", testValue3);
+		
+		// Expected object
+		GenericEnumSymbol<EnumSymbol> expTestValue3 = new EnumSymbol(ReaderSchema, "OPTION_1");
+		GenericRecord expAvroData3 = new GenericData.Record(ReaderSchema);
+		expAvroData3.put("myData", expTestValue3);
+		
+		return myTester.testCompatibility(avroData3, WriterSchema, ReaderSchema, expAvroData3);
+	}
+	
+	
+	private int test4(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue4 = new EnumSymbol(WriterSchema, "OPTION_3");
+		GenericRecord avroData4 = new GenericData.Record(WriterSchema);
+		avroData4.put("myData", testValue4);
+		
+		// Expected object
+		GenericRecord expAvroData4 = null;
+		
+		return myTester.testCompatibility(avroData4, WriterSchema, ReaderSchema, expAvroData4); // Fail	
+	}
+	
+	
+	private int test5(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue5 = new EnumSymbol(WriterSchema, "OPTION_3");
+		GenericRecord avroData5 = new GenericData.Record(WriterSchema);
+		avroData5.put("myData", testValue5);
+		
+		// Expected object
+		GenericEnumSymbol<EnumSymbol> expTestValue5 = new EnumSymbol(ReaderSchema, "OPTION_1");
+		GenericRecord expAvroData5 = new GenericData.Record(ReaderSchema);
+		expAvroData5.put("myData", expTestValue5);
+		
+		return myTester.testCompatibility(avroData5, WriterSchema, ReaderSchema, expAvroData5);
+	}
+	
+	
+	private int test6(Schema WriterSchema, Schema ReaderSchema){
+		//Input object
+		GenericEnumSymbol<EnumSymbol> testValue6 = new EnumSymbol(WriterSchema, "OPTION_3");
+		GenericRecord avroData6 = new GenericData.Record(WriterSchema);
+		avroData6.put("myData", testValue6);
+		
+		// Expected object
+		GenericEnumSymbol<EnumSymbol> expTestValue6 = new EnumSymbol(ReaderSchema, "OPTION_4");
+		GenericRecord expAvroData6 = new GenericData.Record(ReaderSchema);
+		expAvroData6.put("myData", expTestValue6);
+		
+		return myTester.testCompatibility(avroData6, WriterSchema, ReaderSchema, expAvroData6);
+	}
+	
+	
+	private int test7(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue7 = new EnumSymbol(WriterSchema, "OPTION_3");
+		GenericRecord avroData7 = new GenericData.Record(WriterSchema);
+		avroData7.put("myData", testValue7);
+		
+		// Output object
+		GenericEnumSymbol<EnumSymbol> expTestValue7 = new EnumSymbol(ReaderSchema, "OPTION_3");
+		GenericRecord expAvroData7 = new GenericData.Record(ReaderSchema);
+		expAvroData7.put("myData", expTestValue7);
+		
+		return myTester.testCompatibility(avroData7, WriterSchema, ReaderSchema, expAvroData7);
+
+	}
+	
+	private int test8(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue8 = new EnumSymbol(WriterSchema, "OPTION_4");
+		GenericRecord avroData8 = new GenericData.Record(WriterSchema);
+		avroData8.put("myData", testValue8);
+		
+		// Output object
+		GenericEnumSymbol<EnumSymbol> expTestValue8 = new EnumSymbol(WriterSchema, "OPTION_3");
+		GenericRecord expAvroData8 = new GenericData.Record(WriterSchema);
+		expAvroData8.put("myData", expTestValue8);
+		
+		
+		return myTester.testCompatibility(avroData8, WriterSchema, ReaderSchema, expAvroData8);
+
+	}
+	
+	private int test9(Schema WriterSchema, Schema ReaderSchema){
+		
+		// Input object
+		GenericEnumSymbol<EnumSymbol> testValue9 = new EnumSymbol(WriterSchema, "OPTION_4");
+		GenericRecord avroData9 = new GenericData.Record(WriterSchema);
+		avroData9.put("myData", testValue9);
+		
+		// Output object
+		GenericRecord expAvroData9 = null;
+
+		
+		return myTester.testCompatibility(avroData9, WriterSchema, ReaderSchema, expAvroData9);
+
+	}
+	
+
 	
 	
 }

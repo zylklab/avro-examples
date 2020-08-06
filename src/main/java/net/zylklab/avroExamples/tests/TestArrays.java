@@ -2,23 +2,26 @@ package main.java.net.zylklab.avroExamples.tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.util.Utf8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.net.zylklab.avroExamples.utils.TestCompatibility;
+import main.java.net.zylklab.avroExamples.Main;
+import main.java.net.zylklab.avroExamples.utils.ReportIO;
 
 
-public class TestArrays {
+public class TestArrays extends Tests{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(TestArrays.class);
-	
-	public void testArrayCompatibility(){
+	private static final Logger LOGGER = LoggerFactory.getLogger(MyTests.class);
+
+	public void testCompatibility(){
 				
 		// Read all schemas
 		Schema schema1, schema2, schema3;
@@ -33,49 +36,74 @@ public class TestArrays {
 			return;			
 		}
 		
-		// Instantiate the class that checks for compatibility
-		TestCompatibility myTester = new TestCompatibility();
-		
 		// Keep results stored somewhere
 		List<Integer> results = new ArrayList<Integer>();
 		
-		LOGGER.info("Test 1: Arrays have the same item type");
+		// Start results reporter
+		ReportIO reporter = new ReportIO();
+		
+		LOGGER.info("Test 1: Arrays have the same item type");			
 		// Schema 1
-		List<String> testArray1 = new ArrayList<String>();
-		testArray1.add("Hello");
-		GenericRecord avroData1 = new GenericData.Record(schema1);
-		avroData1.put("myData", testArray1);
-		results.add(myTester.testCompatibility(avroData1, schema1, schema1)); // Pass
+		results.add(test1(schema1, schema1)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		LOGGER.info("Test 2: Arrays have different item types, but you can promote from one to the other");
+		LOGGER.info("Test 2: Arrays have different item types, but you can promote from one to the other"); 
 		// Schema 1 and 2
-		List<String> testArray2 = new ArrayList<String>();
-		testArray2.add("Hello");
-		GenericRecord avroData2 = new GenericData.Record(schema1);
-		avroData2.put("myData", testArray2);
-		results.add(myTester.testCompatibility(avroData2, schema1, schema2)); // Pass
-
+		results.add(test2(schema1, schema2)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
-		LOGGER.info("Test 3: Arrays have different item types, and you cannot promote from one to the other");
+		LOGGER.info("Test 3: Arrays have different item types, and you cannot promote from one to the other"); 
 		// Schema 1 and 3
-		List<String> testArray3 = new ArrayList<String>();
-		testArray3.add("Hello");
-		GenericRecord avroData3 = new GenericData.Record(schema1);
-		avroData3.put("myData", testArray3);
-		results.add(myTester.testCompatibility(avroData3, schema1, schema3)); // Fail
+		results.add(test3(schema1, schema3)); // Fail
+		reporter.reportResults(results.get(results.size() - 1 ));
+		
+		reportSuccesses(results, 2);
+		
+	}
+	
+	private int test1(Schema WriterSchema, Schema ReaderSchema){
+		
+		// Input object
+		List<String> testArray1 = new ArrayList<String>();
+		testArray1.add(Main.DEFAULT_STRING);
+		GenericRecord avroData1 = new GenericData.Record(WriterSchema);
+		avroData1.put("myData", testArray1);
+		// Expected object
+		List<Utf8> expTestArray1 = new ArrayList<Utf8>();
+		expTestArray1.add(new Utf8(Main.DEFAULT_STRING));
+		GenericRecord expAvroData1 = new GenericData.Record(ReaderSchema);
+		expAvroData1.put("myData", new GenericData.Array<Utf8>(ReaderSchema.getField("myData").schema(), expTestArray1));
+		
+		return myTester.testCompatibility(avroData1, WriterSchema, ReaderSchema, expAvroData1);
+		
+	}
+	
+	private int test2(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		List<String> testArray2 = new ArrayList<String>();
+		testArray2.add(Main.DEFAULT_STRING);
+		GenericRecord avroData2 = new GenericData.Record(WriterSchema);
+		avroData2.put("myData", testArray2);
+		// Expected object
+		List<ByteBuffer> expTestArray2 = new ArrayList<ByteBuffer>();
+		expTestArray2.add(ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		GenericRecord expAvroData2 = new GenericData.Record(ReaderSchema);
+		expAvroData2.put("myData", expTestArray2);
+		
+		return myTester.testCompatibility(avroData2, WriterSchema, ReaderSchema, expAvroData2);
+	}
 
+	private int test3(Schema WriterSchema, Schema ReaderSchema){
 		
+		// Input object
+		List<String> testArray3 = new ArrayList<String>();
+		testArray3.add(Main.DEFAULT_STRING);
+		GenericRecord avroData3 = new GenericData.Record(WriterSchema);
+		avroData3.put("myData", testArray3);
+		// Expected object
+		GenericRecord expAvroData3 = null;
 		
-		// Return info
-		// // Count number of successes
-		int count=0;
-		for (Integer i : results) {
-			if (i>0) {
-				count += 1;
-			}
-		}
-		LOGGER.info("Expected " + 2 + " tests to run successfully. Got " + count);		// TODO Hardcoded number here
-		
+		return myTester.testCompatibility(avroData3, WriterSchema, ReaderSchema, expAvroData3);
 	}
 	
 }

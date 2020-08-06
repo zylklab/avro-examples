@@ -10,16 +10,17 @@ import java.util.Map;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.util.Utf8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.net.zylklab.avroExamples.utils.TestCompatibility;
+import main.java.net.zylklab.avroExamples.utils.ReportIO;
 
-public class TestMaps {
+public class TestMaps extends Tests{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(TestArrays.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestMaps.class);
 
-	public void testArrayCompatibility(){
+	public void testCompatibility(){
 		
 		// Read all schemas
 		Schema schema1, schema2;
@@ -33,50 +34,78 @@ public class TestMaps {
 			return;			
 		}
 		
-		// Instantiate the class that checks for compatibility
-		TestCompatibility myTester = new TestCompatibility();
-		
+
 		// Keep results stored somewhere
 		List<Integer> results = new ArrayList<Integer>();
 		
+		// Start results reporter
+		ReportIO reporter = new ReportIO();
+		
 		LOGGER.info("Test 1: Maps have the same item type");
 		// Schema 1
-		Map<String, Integer> myMap1 = new HashMap<String, Integer>();
-		myMap1.put("key_1", 1);
-		GenericRecord avroData1 = new GenericData.Record(schema1);
-		avroData1.put("myData", myMap1);
-		results.add(myTester.testCompatibility(avroData1, schema1, schema1)); // Pass
-
+		results.add(test1(schema1, schema1)); // pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 
 		LOGGER.info("Test 2: Maps have different item types, but you can promote from one to the other");
 		// Schema 1 and 2
-		Map<String, Integer> myMap2 = new HashMap<String, Integer>();
-		myMap2.put("key_1", 1);
-		GenericRecord avroData2 = new GenericData.Record(schema1);
-		avroData2.put("myData", myMap2);
-		results.add(myTester.testCompatibility(avroData2, schema1, schema2)); // Pass
-
+		results.add(test2(schema1, schema2)); // Pass
+		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		LOGGER.info("Test 3: Maps have different item types, and you cannot promote from one to the other");
 		// Schema 1 and 2
-		Map<String, Long> myMap3 = new HashMap<String, Long>();
-		myMap3.put("key_1", (long) 1);
-		GenericRecord avroData3 = new GenericData.Record(schema2);
-		avroData3.put("myData", myMap3);
-		results.add(myTester.testCompatibility(avroData3, schema2, schema1)); // Fail
-				
+		results.add(test3(schema2, schema1)); // Fail
+		reporter.reportResults(results.get(results.size() - 1 ));
+		
 		// Return info
-		// // Count number of successes
-		int count=0;
-		for (Integer i : results) {
-			if (i>0) {
-				count += 1;
-			}
-		}
-		LOGGER.info("Expected " + 2 + " tests to run successfully. Got " + count);		// TODO Hardcoded number here
+		reportSuccesses(results, 2);
 		
 		
 	}
 
+	
+	private int test1(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		Map<String, Integer> myMap1 = new HashMap<String, Integer>();
+		myMap1.put("key_1", 1);
+		GenericRecord avroData1 = new GenericData.Record(WriterSchema);
+		avroData1.put("myData", myMap1);
+		
+		// Expected object
+		Map<Utf8, Integer> expMyMap1 = new HashMap<Utf8, Integer>();
+		expMyMap1.put(new Utf8("key_1"), 1);
+		GenericRecord expAvroData1 = new GenericData.Record(ReaderSchema);
+		expAvroData1.put("myData", expMyMap1);
+		
+		return myTester.testCompatibility(avroData1, WriterSchema, ReaderSchema, expAvroData1);
+	}
+	
+	private int test2(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		Map<String, Integer> myMap2 = new HashMap<String, Integer>();
+		myMap2.put("key_1", 1);
+		GenericRecord avroData2 = new GenericData.Record(WriterSchema);
+		avroData2.put("myData", myMap2);
+		
+		// Expected object
+		Map<Utf8, Long> expMyMap2 = new HashMap<Utf8, Long>();
+		expMyMap2.put(new Utf8("key_1"), (long) 1);
+		GenericRecord expAvroData2 = new GenericData.Record(ReaderSchema);
+		expAvroData2.put("myData", expMyMap2);
+		
+		return myTester.testCompatibility(avroData2, WriterSchema, ReaderSchema, expAvroData2);
+	}
+	
+	private int test3(Schema WriterSchema, Schema ReaderSchema){
+		// Input object
+		Map<String, Long> myMap3 = new HashMap<String, Long>();
+		myMap3.put("key_1", (long) 1);
+		GenericRecord avroData3 = new GenericData.Record(WriterSchema);
+		avroData3.put("myData", myMap3);
+		
+		// Expected output
+		GenericRecord expAvroData3 = null;
+		
+		return myTester.testCompatibility(avroData3, WriterSchema, ReaderSchema, expAvroData3);
+	}
 	
 }
