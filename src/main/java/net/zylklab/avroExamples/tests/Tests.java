@@ -11,7 +11,7 @@ import main.java.net.zylklab.avroExamples.utils.TestCompatibility;
 
 public abstract class Tests {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MyTests.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Tests.class);
 	
 	/**
 	 * Object that runs the tests.

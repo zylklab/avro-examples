@@ -19,7 +19,7 @@ import main.java.net.zylklab.avroExamples.utils.ReportIO;
 
 public class TestArrays extends Tests{
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(MyTests.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestArrays.class);
 
 	public void testCompatibility(){
 				
