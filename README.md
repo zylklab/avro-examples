@@ -59,6 +59,12 @@ java -jar target/avro-examples-0.1-jar-with-dependencies.jar
 
 *  Although not a violation of any rule, we do find counter-intuitive that when dealing with enumerations, the default value of the reader's schema may not exist in the writer's one. However, the default value of a reader's union schema must match a type (or a promotion of a type) that exists in the writer's schema.
 
+## Other information
+
+*  Java version: 1.8
+
+*  Avro version: 1.10
+
 ## TO DO
 
 * Include test for remote invocation with Avro IPC

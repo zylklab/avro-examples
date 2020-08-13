@@ -7,7 +7,7 @@ import main.java.net.zylklab.avroExamples.tests.TestArrays;
 
 public class ReportIO {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(TestArrays.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReportIO.class);
 
 	/**
 	 * Given the output of a test, prints the result in a more humanly readible format.
