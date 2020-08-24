@@ -1,0 +1,9 @@
+{
+    "type": "record",
+    "namespace": "net.zylklab.avroExamples.generated",
+    "name": "records_v4",
+    "fields": [
+	      {"name": "data_1", "type": "long"},
+	      {"name": "data_2", "type": ["null", "bytes"]}
+     ]
+}

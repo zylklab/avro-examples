@@ -1,0 +1,62 @@
+{"namespace": "net.zylklab.avroExamples.generated",
+ "protocol": "MyTests",
+
+ "types": [
+ 
+     {"name": "Record_1", "type": "record",
+      "fields": [
+          {"name": "primitive_value",   "type": "int"},
+          {"name": "complex_value", "type": ["null", "string"]}
+      ]
+     },
+     
+     {"name": "Record_2", "type": "record",
+      "fields": [
+          {"name": "primitive_value",   "type": "int"},
+          {"name": "complex_value", "type": ["null", "string"], "default": null}
+      ]
+     }
+
+ ],
+
+ "messages": {
+ 
+     "send_records_test_1": {
+         "request": [{"name": "req_message", "type": "Record_1"}],
+         "response": [{"name": "res_message", "type": "Record_1"}]
+     },
+     "send_records_test_2": {
+         "request": [{"name": "req_message", "type": "Record_2"}],
+         "response": [{"name": "res_message", "type": "Record_2"}]
+     },
+     "send_records_test_3": {
+         "request": [{"name": "req_message", "type": "Record_1"}],
+         "response": [{"name": "res_message", "type": "Record_1"}]
+     },
+     "send_records_test_4": {
+         "request": [{"name": "req_message", "type": "Record_1"}],
+         "response": [{"name": "res_message", "type": "Record_1"}]
+     },
+     
+     "send_primitive_test_1": {
+         "request": [{"name": "req_message", "type": "string"}],
+         "response": "string"
+     },     
+     "send_primitive_test_2": {
+         "request": [{"name": "req_message", "type": "null"}],
+         "response": "string"
+     },
+     "send_primitive_test_3": {
+         "request": [{"name": "req_message", "type": "string"}],
+         "response": "null"
+     },
+     "send_primitive_test_4": {
+         "request": [{"name": "req_message", "type": "string"}],
+         "response": "string"
+     },    
+          "send_primitive_test_5": {
+         "request": [{"name": "req_message", "type": "string"}],
+         "response": "string"
+     }  
+ }
+}

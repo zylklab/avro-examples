@@ -1,0 +1,8 @@
+{
+    "type": "record",
+    "namespace": "net.zylklab.avroExamples.generated",
+    "name": "unions_v6",
+    "fields": [
+        {"name": "myData", "type": ["string", "int"]}
+     ]
+}

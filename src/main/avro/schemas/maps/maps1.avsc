@@ -1,0 +1,8 @@
+{
+    "type": "record",
+    "namespace": "net.zylklab.avroExamples.generated",
+    "name": "maps_v1",
+    "fields": [
+        {"name": "myData", "type": {"type": "map", "values" : "int"}}
+     ]
+}

@@ -1,8 +1,0 @@
-{
-    "type": "record",
-    "namespace": "net.zylklab.avroExamples",
-    "name": "fixed_v2",
-    "fields": [
-        {"name": "myData", "type": {"name": "FixedType_v2", "type": "fixed", "size": 4}}
-     ]
-}

@@ -1,0 +1,14 @@
+{
+    "type": "record",
+    "namespace": "net.zylklab.avroExamples.generated",
+    "name": "enum_v5",
+    "fields": [
+        {"name": "myData", "type":  
+        	{"name": "EnumType", 
+        	"type": "enum", 
+        	"symbols" : ["OPTION_1", "OPTION_2", "OPTION_4"],
+        	"default": "OPTION_1"
+        	}
+        }
+     ]
+}
