@@ -1,16 +1,10 @@
 package net.zylklab.avroExamples.protocols.tests;
 
-import java.util.ArrayList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.zylklab.avroExamples.generated.Record_1;
-import net.zylklab.avroExamples.generated.Record_2;
-import net.zylklab.avroExamples.protocols.Main;
 import net.zylklab.avroExamples.protocols.utils.ClientAvroHTTP;
 import net.zylklab.avroExamples.protocols.utils.ProxyServerAvroHTTP;
-import net.zylklab.avroExamples.protocols.utils.ReportIO;
 
 public class TestJetty extends CommunicationTests{
 
@@ -35,20 +29,33 @@ public class TestJetty extends CommunicationTests{
 		return server;
 	}
 	
-	public void testCommunication(String host, int port) {
+	public void runCommunicationTests(String host, int port) {
 		
 		// Create server (in a separate thread)
 		ProxyServerAvroHTTP server = createServer(host, port);
-		
-		// Create client launcher
+				
+		// Start communication tests
 		ClientAvroHTTP client = new ClientAvroHTTP(host, port);
-		
-		// Start tests
 		CommunicationTests ct = new CommunicationTests();
-		ct.testCommunications(server, client);
+		ct.testCommunications(server, client, 7);
+		client.closeClient();
 
 		// Close server and clients
-		client.closeClient();
+		server.setClose(true);
+		
+		return;
+	}
+	
+	public void runStressTests(String host, int port) {
+		
+		// Create server (in a separate thread)
+		ProxyServerAvroHTTP server = createServer(host, port);
+
+		// Start stress tests
+		StressTests st = new StressTests();
+		st.testStress(server, host, port);
+
+		// Close server and clients
 		server.setClose(true);
 		
 		return;

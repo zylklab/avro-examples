@@ -38,6 +38,19 @@
          "response": [{"name": "res_message", "type": "Record_1"}]
      },
      
+     "send_records_oneway_test_1": {
+         "request": [{"name": "req_message", "type": "Record_1"}],
+         "one-way": true
+     },
+     "send_records_oneway_test_2": {
+         "request": [{"name": "req_message", "type": "Record_2"}],
+         "one-way": true
+     },
+     "send_records_oneway_test_3": {
+         "request": [{"name": "req_message", "type": "Record_1"}],
+         "one-way": true
+     },     
+          
      "send_primitive_test_1": {
          "request": [{"name": "req_message", "type": "string"}],
          "response": "string"
@@ -54,9 +67,26 @@
          "request": [{"name": "req_message", "type": "string"}],
          "response": "string"
      },    
-          "send_primitive_test_5": {
+     "send_primitive_test_5": {
          "request": [{"name": "req_message", "type": "string"}],
          "response": "string"
-     }  
+     },
+     "send_primitive_oneway_test_1": {
+         "request": [{"name": "req_message", "type": "string"}],
+         "one-way": true
+     },
+     "send_primitive_oneway_test_2": {
+         "request": [{"name": "req_message", "type": "null"}],
+         "one-way": true
+     },
+     "send_primitive_oneway_test_3": {
+         "request": [{"name": "req_message", "type": "string"}],
+         "one-way": true
+     },
+     
+     "expensive_operation": {
+         "request": [{"name": "req_message", "type": "Record_1"}],
+         "response": [{"name": "res_message", "type": "Record_1"}]
+     }
  }
 }

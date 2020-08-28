@@ -25,9 +25,9 @@ public class TestFixed extends Tests{
 		// Read all schemas
 		Schema schema1, schema2, schema3;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/schemas/fixed/fixed1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/schemas/fixed/fixed2.avsc"));
-			schema3 = new Schema.Parser().parse(new File("src/main/avro/schemas/fixed/fixed3.avsc"));
+			schema1 = new Schema.Parser().parse(new File("avro/schemas/fixed/fixed1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("avro/schemas/fixed/fixed2.avsc"));
+			schema3 = new Schema.Parser().parse(new File("avro/schemas/fixed/fixed3.avsc"));
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
 			LOGGER.error(ex.toString());

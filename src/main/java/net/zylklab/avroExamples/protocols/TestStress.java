@@ -7,10 +7,9 @@ import net.zylklab.avroExamples.protocols.tests.TestJetty;
 import net.zylklab.avroExamples.protocols.tests.TestNetty;
 
 
+public class TestStress {
 
-public class Main {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestStress.class);
 	
 	/**
 	 * Default string used during testing.
@@ -25,27 +24,28 @@ public class Main {
 	private static int port = 10000;	// Communication port 
 	
 	
-	public static void main(String[] args) {
+	public static void run() {
 		
 		// Test an HTTP server
         LOGGER.info("Testing communication with an HTML server (Jetty)...");
         TestJetty testJetty = new TestJetty();
-        testJetty.testCommunication(host, port);
+        testJetty.runStressTests(host, port);
         
         LOGGER.info("===========================");
         LOGGER.info("Waiting for all elements to close...");
-        // TODO This shouldn't be done this way.
+        // TODO This is horrible coding
         try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        LOGGER.info("===========================");
         
 		// Test an asynchronous server
         LOGGER.info("Testing communication with a Netty server...");
         TestNetty testNetty = new TestNetty();
-        testNetty.testCommunication(host, port);		
+        testNetty.runStressTests(host, port);		
 		
         LOGGER.info("Done");
 		

@@ -15,9 +15,9 @@ public class ReportIO {
 	public void reportResults(int results) {
 		
 		if (results == 1) {
-			LOGGER.info(">> Pass");
+			LOGGER.info(">>>> Pass");
 		} else {
-			LOGGER.info(">> Fail");
+			LOGGER.info(">>>> Fail");
 		}
 	}
 	

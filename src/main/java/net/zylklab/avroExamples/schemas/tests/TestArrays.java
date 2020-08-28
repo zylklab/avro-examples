@@ -13,7 +13,7 @@ import org.apache.avro.util.Utf8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.zylklab.avroExamples.schemas.Main;
+import net.zylklab.avroExamples.schemas.TestSchemas;
 import net.zylklab.avroExamples.schemas.utils.ReportIO;
 
 
@@ -26,9 +26,9 @@ public class TestArrays extends Tests{
 		// Read all schemas
 		Schema schema1, schema2, schema3;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/schemas/arrays/arrays1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/schemas/arrays/arrays2.avsc"));
-			schema3 = new Schema.Parser().parse(new File("src/main/avro/schemas/arrays/arrays3.avsc"));
+			schema1 = new Schema.Parser().parse(new File("avro/schemas/arrays/arrays1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("avro/schemas/arrays/arrays2.avsc"));
+			schema3 = new Schema.Parser().parse(new File("avro/schemas/arrays/arrays3.avsc"));
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
 			LOGGER.error(ex.toString());
@@ -65,12 +65,12 @@ public class TestArrays extends Tests{
 		
 		// Input object
 		List<String> testArray1 = new ArrayList<String>();
-		testArray1.add(Main.DEFAULT_STRING);
+		testArray1.add(TestSchemas.DEFAULT_STRING);
 		GenericRecord avroData1 = new GenericData.Record(WriterSchema);
 		avroData1.put("myData", testArray1);
 		// Expected object
 		List<Utf8> expTestArray1 = new ArrayList<Utf8>();
-		expTestArray1.add(new Utf8(Main.DEFAULT_STRING));
+		expTestArray1.add(new Utf8(TestSchemas.DEFAULT_STRING));
 		GenericRecord expAvroData1 = new GenericData.Record(ReaderSchema);
 		expAvroData1.put("myData", new GenericData.Array<Utf8>(ReaderSchema.getField("myData").schema(), expTestArray1));
 		
@@ -81,12 +81,12 @@ public class TestArrays extends Tests{
 	private int test2(Schema WriterSchema, Schema ReaderSchema){
 		// Input object
 		List<String> testArray2 = new ArrayList<String>();
-		testArray2.add(Main.DEFAULT_STRING);
+		testArray2.add(TestSchemas.DEFAULT_STRING);
 		GenericRecord avroData2 = new GenericData.Record(WriterSchema);
 		avroData2.put("myData", testArray2);
 		// Expected object
 		List<ByteBuffer> expTestArray2 = new ArrayList<ByteBuffer>();
-		expTestArray2.add(ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		expTestArray2.add(ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		GenericRecord expAvroData2 = new GenericData.Record(ReaderSchema);
 		expAvroData2.put("myData", expTestArray2);
 		
@@ -97,7 +97,7 @@ public class TestArrays extends Tests{
 		
 		// Input object
 		List<String> testArray3 = new ArrayList<String>();
-		testArray3.add(Main.DEFAULT_STRING);
+		testArray3.add(TestSchemas.DEFAULT_STRING);
 		GenericRecord avroData3 = new GenericData.Record(WriterSchema);
 		avroData3.put("myData", testArray3);
 		// Expected object

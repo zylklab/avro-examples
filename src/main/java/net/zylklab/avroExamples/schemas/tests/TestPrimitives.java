@@ -12,7 +12,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.zylklab.avroExamples.schemas.Main;
+import net.zylklab.avroExamples.schemas.TestSchemas;
 import net.zylklab.avroExamples.schemas.utils.ReportIO;
 
 public class TestPrimitives extends Tests{
@@ -24,9 +24,9 @@ public class TestPrimitives extends Tests{
 		// Read all schemas
 		Schema schema1, schema2, schema3;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/schemas/primitives/primitives1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/schemas/primitives/primitives2.avsc"));
-			schema3 = new Schema.Parser().parse(new File("src/main/avro/schemas/primitives/primitives3.avsc"));
+			schema1 = new Schema.Parser().parse(new File("avro/schemas/primitives/primitives1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("avro/schemas/primitives/primitives2.avsc"));
+			schema3 = new Schema.Parser().parse(new File("avro/schemas/primitives/primitives3.avsc"));
 
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
@@ -79,11 +79,11 @@ public class TestPrimitives extends Tests{
 	private int test2(Schema WriterSchema, Schema ReaderSchema){
 		// Input object
 		GenericRecord avroData2 = new GenericData.Record(WriterSchema);
-		avroData2.put("myData", Main.DEFAULT_STRING);
+		avroData2.put("myData", TestSchemas.DEFAULT_STRING);
 		
 		// Expected object
 		GenericRecord expAvroData2 = new GenericData.Record(ReaderSchema);
-		expAvroData2.put("myData", ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		expAvroData2.put("myData", ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		
 		return myTester.testCompatibility(avroData2, WriterSchema, ReaderSchema, expAvroData2); 
 

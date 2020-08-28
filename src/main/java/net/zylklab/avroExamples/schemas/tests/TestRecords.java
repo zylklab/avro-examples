@@ -13,7 +13,7 @@ import org.apache.avro.util.Utf8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.zylklab.avroExamples.schemas.Main;
+import net.zylklab.avroExamples.schemas.TestSchemas;
 import net.zylklab.avroExamples.schemas.utils.ReportIO;
 
 public class TestRecords extends Tests{
@@ -26,13 +26,13 @@ public class TestRecords extends Tests{
 		// Read all schemas
 		Schema schema1, schema2, schema3, schema4, schema5, schema6, schema7;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records2.avsc"));
-			schema3 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records3.avsc"));
-			schema4 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records4.avsc"));
-			schema5 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records5.avsc"));
-			schema6 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records6.avsc"));
-			schema7 = new Schema.Parser().parse(new File("src/main/avro/schemas/records/records7.avsc"));
+			schema1 = new Schema.Parser().parse(new File("avro/schemas/records/records1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("avro/schemas/records/records2.avsc"));
+			schema3 = new Schema.Parser().parse(new File("avro/schemas/records/records3.avsc"));
+			schema4 = new Schema.Parser().parse(new File("avro/schemas/records/records4.avsc"));
+			schema5 = new Schema.Parser().parse(new File("avro/schemas/records/records5.avsc"));
+			schema6 = new Schema.Parser().parse(new File("avro/schemas/records/records6.avsc"));
+			schema7 = new Schema.Parser().parse(new File("avro/schemas/records/records7.avsc"));
 
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
@@ -150,7 +150,7 @@ public class TestRecords extends Tests{
 		// Expected object
 		GenericRecord expAvroRecord4 = new GenericData.Record(ReaderSchema);
 		expAvroRecord4.put("data_1", (long) 1);
-		expAvroRecord4.put("data_2", ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		expAvroRecord4.put("data_2", ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		
 		return myTester.testCompatibility(avroRecord4, WriterSchema, ReaderSchema, expAvroRecord4);
 		

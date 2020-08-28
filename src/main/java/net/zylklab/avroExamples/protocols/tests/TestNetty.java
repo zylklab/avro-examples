@@ -3,9 +3,7 @@ package net.zylklab.avroExamples.protocols.tests;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.zylklab.avroExamples.protocols.utils.ClientAvroHTTP;
 import net.zylklab.avroExamples.protocols.utils.ClientAvroRPC;
-import net.zylklab.avroExamples.protocols.utils.ProxyServerAvroHTTP;
 import net.zylklab.avroExamples.protocols.utils.ProxyServerAvroRPC;
 
 public class TestNetty extends CommunicationTests{
@@ -30,23 +28,38 @@ public class TestNetty extends CommunicationTests{
 		return server;
 	}
 	
-	public void testCommunication(String host, int port) {
+	public void runCommunicationTests(String host, int port) {
 		
 		// Create server (in a separate thread)
 		ProxyServerAvroRPC server = createServer(host, port);
 		
-		// Create client launcher
+		// Start communication tests
 		ClientAvroRPC client = new ClientAvroRPC(host, port);
-		
-		// Start tests
 		CommunicationTests ct = new CommunicationTests();
-		ct.testCommunications(server, client);
-
-		// Close server and clients
+		ct.testCommunications(server, client, 8);
 		client.closeClient();
+		
+		// Close server and clients
 		server.setClose(true);
 		
 		return;
 		
 	}
+	
+	public void runStressTests(String host, int port) {
+		
+		// Create server (in a separate thread)
+		ProxyServerAvroRPC server = createServer(host, port);
+		
+		// Start stress tests
+		StressTests st = new StressTests();
+		st.testStress(server, host, port);
+
+		// Close server and clients
+		server.setClose(true);
+		
+		return;
+		
+	}
+	
 }

@@ -46,10 +46,19 @@ In addition, every Avro schema type contains a test where the writer and reader 
 The easiest way to run this project is by using Maven:
 
 ```
-mvn clean install && mvn clean compile assembly:single
+mvn clean generate-resources install
 
-java -jar target/avro-examples-0.1-jar-with-dependencies.jar
+java -jar target/avro-examples-0.1-jar-with-dependencies.jar OPTION
 ```
+
+Where the `OPTION` parameter can be one of the following:
+
+*  `a`
+
+*  `a`
+
+*  `a`
+ 
 
 ## Conclusions
 

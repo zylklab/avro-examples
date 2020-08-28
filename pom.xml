@@ -45,13 +45,36 @@
 
 		<dependency>
 		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-simple</artifactId>
+		    <artifactId>slf4j-api</artifactId>
 		    <version>1.7.30</version>
 		</dependency>
+		<dependency>
+       		<groupId>org.slf4j</groupId>
+       		<artifactId>slf4j-log4j12</artifactId>
+       		<version>1.7.30</version>
+   		</dependency>
 	
 	</dependencies> 
 	
 	<build>
+	
+	    	<resources>
+	      		<resource>
+	        		<directory>${project.basedir}/src/main/</directory>
+	        		<targetPath>${project.build.directory}</targetPath>
+	        		<includes>
+		          		<include>avro/**</include>
+	        		</includes>
+	      		</resource>
+	      	<resource>
+	            <directory>${project.basedir}/src/main/resources</directory>
+	            <targetPath>${project.build.directory}</targetPath>
+	            <includes>
+	                <include>log4j.properties</include>
+	            </includes>
+        	</resource>
+    		</resources>
+	
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -70,11 +93,14 @@
 	                <configuration>
 	                    <descriptorRefs>
 	                        <descriptorRef>jar-with-dependencies</descriptorRef>
-	                    </descriptorRefs>
+	                    </descriptorRefs>	                    
 		                <archive>
 		                        <manifest>
 		                            <mainClass>net.zylklab.avroExamples.Main</mainClass>
 		                        </manifest>
+		                        <manifestEntries>
+                					<Class-Path>.</Class-Path>
+            					</manifestEntries>
 		                    </archive>
 		                </configuration>
 		                <executions>

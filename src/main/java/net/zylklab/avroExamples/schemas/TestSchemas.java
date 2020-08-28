@@ -11,9 +11,9 @@ import net.zylklab.avroExamples.schemas.tests.TestPrimitives;
 import net.zylklab.avroExamples.schemas.tests.TestRecords;
 import net.zylklab.avroExamples.schemas.tests.TestUnions;
 
-public class Main {
+public class TestSchemas {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestSchemas.class);
 	
 	/**
 	 * Default string used during testing.
@@ -30,7 +30,7 @@ public class Main {
 	 * 
 	 * @param args
 	 */
-    public static void main(String[] args) {
+    public static void run() {
 
     	   	
         LOGGER.info("Testing arrays...");

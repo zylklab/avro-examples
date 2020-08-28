@@ -25,8 +25,8 @@ public class TestMaps extends Tests{
 		// Read all schemas
 		Schema schema1, schema2;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/schemas/maps/maps1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/schemas/maps/maps2.avsc"));
+			schema1 = new Schema.Parser().parse(new File("avro/schemas/maps/maps1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("avro/schemas/maps/maps2.avsc"));
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
 			LOGGER.error(ex.toString());

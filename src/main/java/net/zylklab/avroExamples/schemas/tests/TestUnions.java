@@ -13,7 +13,8 @@ import org.apache.avro.util.Utf8;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.zylklab.avroExamples.schemas.Main;
+import net.zylklab.avroExamples.protocols.TestCommunications;
+import net.zylklab.avroExamples.schemas.TestSchemas;
 import net.zylklab.avroExamples.schemas.utils.ReportIO;
 
 public class TestUnions extends Tests{
@@ -25,18 +26,18 @@ public class TestUnions extends Tests{
 		// Read all schemas
 		Schema schema1, schema2, schema3, schema4, schema5, schema6, schema7, schema8, schemaPrim1, schemaPrim2, schemaPrim3;
 		try {
-			schema1 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions1.avsc"));
-			schema2 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions2.avsc"));
-			schema3 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions3.avsc"));
-			schema4 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions4.avsc"));
-			schema5 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions5.avsc"));
-			schema6 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions6.avsc"));
-			schema7 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions7.avsc"));
-			schema8 = new Schema.Parser().parse(new File("src/main/avro/schemas/unions/unions8.avsc"));
+			schema1 = new Schema.Parser().parse(new File("avro/schemas/unions/unions1.avsc"));
+			schema2 = new Schema.Parser().parse(new File("avro/schemas/unions/unions2.avsc"));
+			schema3 = new Schema.Parser().parse(new File("avro/schemas/unions/unions3.avsc"));
+			schema4 = new Schema.Parser().parse(new File("avro/schemas/unions/unions4.avsc"));
+			schema5 = new Schema.Parser().parse(new File("avro/schemas/unions/unions5.avsc"));
+			schema6 = new Schema.Parser().parse(new File("avro/schemas/unions/unions6.avsc"));
+			schema7 = new Schema.Parser().parse(new File("avro/schemas/unions/unions7.avsc"));
+			schema8 = new Schema.Parser().parse(new File("avro/schemas/unions/unions8.avsc"));
 
-			schemaPrim1 = new Schema.Parser().parse(new File("src/main/avro/schemas/primitives/primitives1.avsc"));
-			schemaPrim2 = new Schema.Parser().parse(new File("src/main/avro/schemas/primitives/primitives2.avsc"));
-			schemaPrim3 = new Schema.Parser().parse(new File("src/main/avro/schemas/primitives/primitives3.avsc"));
+			schemaPrim1 = new Schema.Parser().parse(new File("avro/schemas/primitives/primitives1.avsc"));
+			schemaPrim2 = new Schema.Parser().parse(new File("avro/schemas/primitives/primitives2.avsc"));
+			schemaPrim3 = new Schema.Parser().parse(new File("avro/schemas/primitives/primitives3.avsc"));
 		} catch (IOException ex) {
 			LOGGER.error("An error occurred while creating the array schemas. We won't perform any of these tests.");
 			LOGGER.error(ex.toString());
@@ -164,11 +165,11 @@ public class TestUnions extends Tests{
 	private int test2(Schema WriterSchema, Schema ReaderSchema){
 		// Input object 
 		GenericRecord avroData2 = new GenericData.Record(WriterSchema);
-		avroData2.put("myData", Main.DEFAULT_STRING);
+		avroData2.put("myData", TestSchemas.DEFAULT_STRING);
 		
 		// Expected object
 		GenericRecord expAvroData2 = new GenericData.Record(ReaderSchema);
-		expAvroData2.put("myData", ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		expAvroData2.put("myData", ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		
 		return myTester.testCompatibility(avroData2, WriterSchema, ReaderSchema, expAvroData2);
 
@@ -203,7 +204,7 @@ public class TestUnions extends Tests{
 	private int test51(Schema WriterSchema, Schema ReaderSchema){
 		// Input object 
 		GenericRecord avroData51 = new GenericData.Record(WriterSchema);
-		avroData51.put("myData", Main.DEFAULT_STRING);
+		avroData51.put("myData", TestSchemas.DEFAULT_STRING);
 		
 		// Output object
 		GenericRecord expAvroData51 = null;
@@ -265,11 +266,11 @@ public class TestUnions extends Tests{
 	private int test72(Schema WriterSchema, Schema ReaderSchema){
 		// Input object 
 		GenericRecord avroData72 = new GenericData.Record(WriterSchema);
-		avroData72.put("myData", Main.DEFAULT_STRING);
+		avroData72.put("myData", TestSchemas.DEFAULT_STRING);
 
 		// Expected output
 		GenericRecord expAvroData72 = new GenericData.Record(ReaderSchema);
-		expAvroData72.put("myData", new Utf8(Main.DEFAULT_STRING));
+		expAvroData72.put("myData", new Utf8(TestSchemas.DEFAULT_STRING));
 		
 		return myTester.testCompatibility(avroData72, WriterSchema, ReaderSchema, expAvroData72);
 
@@ -279,11 +280,11 @@ public class TestUnions extends Tests{
 	private int test81(Schema WriterSchema, Schema ReaderSchema){
 		// Input object 
 		GenericRecord avroData81 = new GenericData.Record(WriterSchema);
-		avroData81.put("myData", Main.DEFAULT_STRING);
+		avroData81.put("myData", TestSchemas.DEFAULT_STRING);
 		
 		// Expected output
 		GenericRecord expAvroData81 = new GenericData.Record(ReaderSchema);
-		expAvroData81.put("myData", ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		expAvroData81.put("myData", ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		
 		return myTester.testCompatibility(avroData81, WriterSchema, ReaderSchema, expAvroData81);
 
@@ -292,11 +293,11 @@ public class TestUnions extends Tests{
 	private int test82(Schema WriterSchema, Schema ReaderSchema){
 		// Input object 
 		GenericRecord avroData82 = new GenericData.Record(WriterSchema);
-		avroData82.put("myData", ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		avroData82.put("myData", ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		
 		// Expected output
 		GenericRecord expAvroData82 = new GenericData.Record(ReaderSchema);
-		expAvroData82.put("myData", new Utf8(Main.DEFAULT_STRING));
+		expAvroData82.put("myData", new Utf8(TestSchemas.DEFAULT_STRING));
 		
 		return myTester.testCompatibility(avroData82, WriterSchema, ReaderSchema, expAvroData82);
 
@@ -305,14 +306,14 @@ public class TestUnions extends Tests{
 	private int test9(Schema WriterSchema, Schema ReaderSchema){
 		// Input object 
 		List<String> testArray1 = new ArrayList<String>();
-		testArray1.add(Main.DEFAULT_STRING);
+		testArray1.add(TestCommunications.DEFAULT_STRING);
 		GenericRecord avroData9 = new GenericData.Record(WriterSchema);
 		avroData9.put("myData", testArray1);
 		
 		
 		// Expected output
 		List<Utf8> expTestArray1 = new ArrayList<Utf8>();
-		expTestArray1.add(new Utf8(Main.DEFAULT_STRING));
+		expTestArray1.add(new Utf8(TestSchemas.DEFAULT_STRING));
 		GenericRecord expAvroData9 = new GenericData.Record(ReaderSchema);
 		expAvroData9.put("myData", new GenericData.Array<Utf8>(ReaderSchema.getField("myData").schema().getTypes().get(1), expTestArray1));
 		
@@ -329,7 +330,7 @@ public class TestUnions extends Tests{
 		
 		// Expected output
 		List<ByteBuffer> expTestArray21 = new ArrayList<ByteBuffer>();
-		expTestArray21.add(ByteBuffer.wrap(Main.DEFAULT_STRING.getBytes()));
+		expTestArray21.add(ByteBuffer.wrap(TestSchemas.DEFAULT_STRING.getBytes()));
 		GenericRecord expAvroData10 = new GenericData.Record(ReaderSchema);
 		expAvroData10.put("myData", expTestArray21);
 		

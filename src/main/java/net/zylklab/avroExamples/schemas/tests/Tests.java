@@ -37,7 +37,10 @@ public abstract class Tests {
 				count += 1;
 			}
 		}
+		
+		LOGGER.info("============================================");
 		LOGGER.info("Expected " + expectedHits + " tests to run successfully. Got " + count + ".");
+		LOGGER.info("============================================");
 	}
 	
 }
