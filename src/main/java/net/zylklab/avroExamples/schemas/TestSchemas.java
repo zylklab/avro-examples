@@ -27,8 +27,6 @@ public class TestSchemas {
 	
 	/**
 	 * Runs all the tests on Avro schemas.
-	 * 
-	 * @param args
 	 */
     public static void run() {
 

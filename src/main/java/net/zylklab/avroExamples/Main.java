@@ -12,6 +12,11 @@ public class Main {
 
 	static Logger LOGGER = LoggerFactory.getLogger(Main.class);
 	
+	/**
+	 * Chooses which test to run.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		String mainOption = args[0];
@@ -37,7 +42,7 @@ public class Main {
 			
 		} else {
 			LOGGER.info(divisor);
-			LOGGER.info("The selected option is not a test. Please select one of the following: schemas, communication, test.");
+			LOGGER.info("The selected option is not a test. Please select one of the following: schemas, communication, stress.");
 			LOGGER.info(divisor);
 		
 			

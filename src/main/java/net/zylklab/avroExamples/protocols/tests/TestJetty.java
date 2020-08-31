@@ -6,10 +6,22 @@ import org.slf4j.LoggerFactory;
 import net.zylklab.avroExamples.protocols.utils.ClientAvroHTTP;
 import net.zylklab.avroExamples.protocols.utils.ProxyServerAvroHTTP;
 
-public class TestJetty extends CommunicationTests{
+
+/**
+ * Launches different tests related to the Jetty server.
+ *
+ */
+public class TestJetty{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestJetty.class);
 	
+	/**
+	 * Creates a Jetty server.
+	 * 
+	 * @param host Server's address
+	 * @param port Server's communication port
+	 * @return New server
+	 */
 	protected ProxyServerAvroHTTP createServer(String host, int port) {
 		
 		// Start server
@@ -29,6 +41,12 @@ public class TestJetty extends CommunicationTests{
 		return server;
 	}
 	
+	/**
+	 * Creates a Jetty server and a Jetty client and runs all communication related tests.
+	 * 
+	 * @param host Server's address
+	 * @param port Server's communication port
+	 */
 	public void runCommunicationTests(String host, int port) {
 		
 		// Create server (in a separate thread)
@@ -46,6 +64,12 @@ public class TestJetty extends CommunicationTests{
 		return;
 	}
 	
+	/**
+	 * Creates a Jetty server runs a stress test.
+	 * 
+	 * @param host Server's address
+	 * @param port Server's communication port
+	 */
 	public void runStressTests(String host, int port) {
 		
 		// Create server (in a separate thread)

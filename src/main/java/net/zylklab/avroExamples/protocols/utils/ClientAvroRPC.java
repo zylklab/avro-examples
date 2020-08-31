@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import net.zylklab.avroExamples.generated.MyTests;
 
 /**
- * 
+ * Default client for a Netty server.
  */
 public class ClientAvroRPC extends ClientAvro{
 	
@@ -19,6 +19,7 @@ public class ClientAvroRPC extends ClientAvro{
 	
 	public ClientAvroRPC(String host, int port){
 		try {
+			// Initialize variables
 	        client = new NettyTransceiver(new InetSocketAddress(host, port));
 	        proxy = (MyTests) SpecificRequestor.getClient(MyTests.class, client);
 		} catch (IOException e) {
@@ -27,6 +28,7 @@ public class ClientAvroRPC extends ClientAvro{
 		}
 	}
     
+	@Override
     public void closeClient(){
     	try {
 			client.close();

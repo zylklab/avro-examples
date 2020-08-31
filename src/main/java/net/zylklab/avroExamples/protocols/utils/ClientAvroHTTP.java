@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import net.zylklab.avroExamples.generated.MyTests;
 
 /**
- * 
+ * Default client for a Jetty server.
  */
 public class ClientAvroHTTP extends ClientAvro {
 	
@@ -20,6 +20,7 @@ public class ClientAvroHTTP extends ClientAvro {
 
 	public ClientAvroHTTP(String host, int port){
 		try {
+			// Initialize variables
 			client = new HttpTransceiver(new URL("http://127.0.0.1:"+port+"/"));     
 			proxy = (MyTests) SpecificRequestor.getClient(MyTests.class, client);
 		} catch (IOException e) {
@@ -27,7 +28,8 @@ public class ClientAvroHTTP extends ClientAvro {
 			LOGGER.error(e.getStackTrace().toString());
 		}
 	}
-    
+	
+	@Override
     public void closeClient(){
     	try {
 			client.close();

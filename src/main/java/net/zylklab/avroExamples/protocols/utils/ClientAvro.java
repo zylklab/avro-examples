@@ -7,11 +7,17 @@ import net.zylklab.avroExamples.generated.Record_1;
 import net.zylklab.avroExamples.generated.Record_2;
 
 /**
- * 
+ * Default client using the Avro IPC framework.
  */
 public abstract class ClientAvro {
 	
-	public Transceiver client;
+	/**
+	 * Handles the communication (send/receive) between this class and the server. 
+	 */
+	protected Transceiver client;
+	/**
+	 * The protocol the client will use.
+	 */
 	protected MyTests proxy; 
 	    
     public Record_1 sendRecordMsg_test_1(Record_1 message){      
@@ -94,6 +100,9 @@ public abstract class ClientAvro {
 		return response;
 	}
     
+	/**
+	 * Closes the client and handle any possible exceptions if necessary.
+	 */
     public abstract void closeClient();
     
 }

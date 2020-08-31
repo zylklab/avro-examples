@@ -6,11 +6,23 @@ import org.slf4j.LoggerFactory;
 import net.zylklab.avroExamples.protocols.utils.ClientAvroRPC;
 import net.zylklab.avroExamples.protocols.utils.ProxyServerAvroRPC;
 
-public class TestNetty extends CommunicationTests{
+/**
+ * Launches different tests related to the Netty server.
+ *
+ */
+public class TestNetty{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestNetty.class);
 	
+	/**
+	 * Creates a Netty server.
+	 * 
+	 * @param host Server's address
+	 * @param port Server's communication port
+	 * @return New server
+	 */
 	protected ProxyServerAvroRPC createServer(String host, int port) {
+		
 		// Start server
 		LOGGER.info("Starting ServerAvroRPC...");
 		ProxyServerAvroRPC server = new ProxyServerAvroRPC(host, port);
@@ -28,6 +40,12 @@ public class TestNetty extends CommunicationTests{
 		return server;
 	}
 	
+	/**
+	 * Creates a Netty server and a Netty client and runs all communication related tests.
+	 * 
+	 * @param host Server's address
+	 * @param port Server's communication port
+	 */
 	public void runCommunicationTests(String host, int port) {
 		
 		// Create server (in a separate thread)
@@ -46,6 +64,12 @@ public class TestNetty extends CommunicationTests{
 		
 	}
 	
+	/**
+	 * Creates a Netty server runs a stress test.
+	 * 
+	 * @param host Server's address
+	 * @param port Server's communication port
+	 */
 	public void runStressTests(String host, int port) {
 		
 		// Create server (in a separate thread)

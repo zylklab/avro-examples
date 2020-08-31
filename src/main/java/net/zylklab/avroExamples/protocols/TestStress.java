@@ -19,17 +19,25 @@ public class TestStress {
 	 * Default integer used during testing.
 	 */
 	public static final int DEFAULT_INT = 1;
+	/**
+	 * Server's address
+	 */
+	private static String HOST = "localhost";
+	/**
+	 * Server port to use for communication.
+	 */
+	private static int PORT = 10000;
 	
-	private static String host = "localhost";	// Communication host
-	private static int port = 10000;	// Communication port 
 	
-	
+	/**
+	 * Runs a stress test on every server.
+	 */
 	public static void run() {
 		
 		// Test an HTTP server
         LOGGER.info("Testing communication with an HTML server (Jetty)...");
         TestJetty testJetty = new TestJetty();
-        testJetty.runStressTests(host, port);
+        testJetty.runStressTests(HOST, PORT);
         
         LOGGER.info("===========================");
         LOGGER.info("Waiting for all elements to close...");
@@ -42,10 +50,10 @@ public class TestStress {
 		}
         LOGGER.info("===========================");
         
-		// Test an asynchronous server
+		// Test a Netty server (synchronously)
         LOGGER.info("Testing communication with a Netty server...");
         TestNetty testNetty = new TestNetty();
-        testNetty.runStressTests(host, port);		
+        testNetty.runStressTests(HOST, PORT);		
 		
         LOGGER.info("Done");
 		

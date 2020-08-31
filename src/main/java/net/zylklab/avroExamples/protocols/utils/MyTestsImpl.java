@@ -5,6 +5,11 @@ import net.zylklab.avroExamples.generated.Record_1;
 import net.zylklab.avroExamples.generated.Record_2;
 import net.zylklab.avroExamples.protocols.TestCommunications;
 
+/**
+ * Defines the response of the server to every possible incoming 
+ * message (from the ones defined in the communication protocol).
+ *
+ */
 public class MyTestsImpl implements MyTests {
 
 	@Override

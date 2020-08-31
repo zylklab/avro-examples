@@ -14,10 +14,20 @@ import net.zylklab.avroExamples.protocols.utils.ClientAvro;
 import net.zylklab.avroExamples.protocols.utils.ProxyServerAvro;
 import net.zylklab.avroExamples.protocols.utils.ReportIO;
 
+/**
+ * Implements and launches all communication tests.
+ */
 public class CommunicationTests {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CommunicationTests.class);
 
+	/**
+	 * Runs all communication tests.
+	 * 
+	 * @param server
+	 * @param client
+	 * @param expected_passes	Number of tests the communication protocol should be able to pass successfully.
+	 */
 	public void testCommunications(ProxyServerAvro server, ClientAvro client, int expected_passes) {
 
 		ReportIO reporter = new ReportIO();
