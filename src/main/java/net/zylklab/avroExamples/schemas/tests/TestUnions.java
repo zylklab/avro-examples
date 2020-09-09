@@ -109,14 +109,14 @@ public class TestUnions extends Tests{
 		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		LOGGER.info(
-				"Test 8: One schema has an union while the other has a primitive type that matches a promotion of the fist element of the union. Test from union to primitive.");
+				"Test 8.1: One schema has an union while the other has a primitive type that matches a promotion of the fist element of the union. Test from union to primitive.");
 		// Union schema 6 and primitive schema 3
 		results.add(test81(schema6, schemaPrim3)); // Pass
 		reporter.reportResults(results.get(results.size() - 1 ));
 		
 		
 		LOGGER.info(
-				"Test 8: One schema has an union while the other has a primitive type that matches a promotion of the fist element of the union. Test from primitive to union.");
+				"Test 8.2: One schema has an union while the other has a primitive type that matches a promotion of the fist element of the union. Test from primitive to union.");
 		// Union schema 6 and primitive schema 3
 		results.add(test82(schemaPrim3, schema6)); // Pass
 		reporter.reportResults(results.get(results.size() - 1 ));

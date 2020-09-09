@@ -110,9 +110,7 @@ The user should know the following:
 
 *  We found no major violations of the aforementioned rules for the schema resolution.
 
-*  Even if two versions of a schema are not compatible, Avro will not raise an error until the conditions for that incompatibility are found. E.g.: An enumeration schema with two values `["Option_1", "Option_2"]` can be used to read records where the writer had a schema such as `["Option_1", "Option_2", "Option_3"]`. We will not see an error until the reader finds an `Option_3` value that cannot process. This affects both enumerations and unions.
-
-*  Although not a violation of any rule, we do find counter-intuitive that when dealing with enumerations, the default value of the reader's schema may not exist in the writer's one. However, the default value of a reader's union schema must match a type (or a promotion of a type) that exists in the writer's schema.
+*  Even if two versions of a schema are not compatible, Avro will not raise an error until the conditions for that incompatibility are found. E.g.: An enumeration schema with two values `["Option_1", "Option_2"]` can be used to read records where the writer had a schema such as `["Option_1", "Option_2", "Option_3"]`. We will not see an error until the reader finds an `Option_3` value that cannot process. This affects both enumerations and unions. We demonstrate this in the enumerations test number 3 and the unions test number 3.
 
 ### Test 2
 
